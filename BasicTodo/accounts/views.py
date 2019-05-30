@@ -10,7 +10,7 @@ def signup(request):
                 password=request.POST['password']
             )
             auth.login(request, user)
-            return render(request, 'accounts/signup.html')
+            return redirect('accounts:test')
         return render(request, 'accounts/signup.html')
 
     return render(request, 'accounts/signup.html')
@@ -30,11 +30,14 @@ def login(request):
 
 
 def logout(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         auth.logout(request)
         return redirect('accounts:test')
     return redirect('accounts:test')
 
 
 def test(request):
-    pass
+    user = auth.get_user(request)
+    if user.is_authenticated:
+        return render(request, 'accounts/login-test2.html')
+    return render(request, 'accounts/login-test.html')

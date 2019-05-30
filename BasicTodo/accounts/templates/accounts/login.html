@@ -2,6 +2,7 @@
     <h1>Login</h1>
 
     <form action="{%url 'accounts:login' %}" method="POST">
+        {% csrf_token %}
 
         <br>ID      : <input type="text" name="username"><br>
         <br>PassWord: <input type="password" name="password"><br>
