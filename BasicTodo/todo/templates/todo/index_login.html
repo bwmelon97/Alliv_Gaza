@@ -1,0 +1,68 @@
+<!-- 로그인 했을 때의 메인 페이지 -->
+
+<h1>Berry's Todo App</h1><br><br>
+
+<p>
+    hi, there! you are login {{user.username}}.
+</p>
+    
+<div>
+    <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <input value="logout" type="submit">
+    </form>
+</div>
+
+
+<div>
+    <form action="{% url 'todo:create' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="new_todo">
+        <input type="submit" value="create">
+    </form>
+    <br>
+
+    {% if latest_todolist %}
+        <ul>
+            {% for todo in latest_todolist %}
+                {% if todo.is_completed %}
+                    <li>
+                        <p>{{ todo.todo_content }}____( O )____{{todo.last_mod}}</p>
+                        <form action="{% url 'todo:update' todo.pk %}" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="modified_content">
+                            <input type="submit" value="수정">
+                        </form>
+                        <form action="{% url 'todo:change_complete' todo.pk %}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="완료여부 변경">
+                        </form>
+                        <form action="{% url 'todo:delete' todo.pk %}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="삭제">
+                        </form>
+                    </li>
+                {% else %}
+                    <li>
+                        <p>{{ todo.todo_content }}____( X )____{{todo.last_mod}}</p>
+                        <form action="{% url 'todo:update' todo.pk %}" method="POST">
+                                {% csrf_token %}
+                                <input type="text" name="modified_content">
+                                <input type="submit" value="수정">
+                            </form>
+                            <form action="{% url 'todo:change_complete' todo.pk %}" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" value="완료여부 변경">
+                            </form>
+                            <form action="{% url 'todo:delete' todo.pk %}" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" value="삭제">
+                            </form>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+</div>
