@@ -1,10 +1,10 @@
 기초적인 Todo 앱입니다 :)
 
-.
-├── Alliv_Gaza.code-workspace               # vscode 워크스페이스 입니다.
+.  
+├── Alliv_Gaza.code-workspace               # vscode 워크스페이스 입니다.  
 ├── BasicTodo                             
-│   ├── BasicTodo
-│   │   ├── __init__.py
+│   ├── BasicTodo  
+│   │   ├── __init__.py  
 │   │   ├── settings.py                     # DB 서버는 저의 local mariadb 서버를 이용했습니다.
 │   │   ├── urls.py
 │   │   └── wsgi.py
