@@ -42,3 +42,5 @@
 │       └── views.py
 ├── Pipfile
 └── Pipfile.lock
+
+각 파이썬 파일들에 대한 자세한 설명은 해당 파일의 doc string을 확인해주세요 !
