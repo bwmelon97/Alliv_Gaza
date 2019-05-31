@@ -25,11 +25,7 @@ def create(request):
             pub_date=timezone.now(),
             last_mod=timezone.now()
         )
-        latest_todolist = user.todolist_set.order_by('-last_mod')
-        context = {
-            'latest_todolist' : latest_todolist
-        }
-        return render(request, 'todo/index_login.html', context)
+        return redirect('base')
 
     return redirect('base')
 
@@ -39,13 +35,7 @@ def update(request, pk):
         todolist = get_object_or_404(TodoList, pk=pk)
         todolist.modify_content(request.POST['modified_content'])
         todolist.save()
-        
-        user = auth.get_user(request)
-        latest_todolist = user.todolist_set.order_by('-last_mod')
-        context = {
-            'latest_todolist' : latest_todolist
-        }
-        return render(request, 'todo/index_login.html', context)
+        return redirect('base')
 
     return redirect('base')
 
@@ -54,13 +44,7 @@ def change_todo_complete(request, pk):
         todolist = get_object_or_404(TodoList, pk=pk)
         todolist.change_complete()
         todolist.save()
-
-        user = auth.get_user(request)
-        latest_todolist = user.todolist_set.order_by('-last_mod')
-        context = {
-            'latest_todolist' : latest_todolist
-        }
-        return render(request, 'todo/index_login.html', context)
+        return redirect('base')
 
     return redirect('base')
 
@@ -69,12 +53,6 @@ def delete(request, pk):
     if request.method == "POST":
         todolist = get_object_or_404(TodoList, pk=pk)
         todolist.delete()
-
-        user = auth.get_user(request)
-        latest_todolist = user.todolist_set.order_by('-last_mod')
-        context = {
-            'latest_todolist' : latest_todolist
-        }
-        return render(request, 'todo/index_login.html', context)
+        return redirect('base')
 
     return redirect('base')
