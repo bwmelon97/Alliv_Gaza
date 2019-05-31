@@ -5,7 +5,9 @@
 <p>
     hi, there! you are login {{user.username}}.
 </p>
-    
+
+
+<!-- 로그아웃 form -->
 <div>
     <form action="{% url 'accounts:logout' %}" method="POST">
         {% csrf_token %}
@@ -14,7 +16,9 @@
 </div>
 
 
+<!-- TodoList를 담는 div 태그 -->
 <div>
+    <!-- 새로운 Todo를 생성하는 form -->
     <form action="{% url 'todo:create' %}" method="POST">
         {% csrf_token %}
         <input type="text" name="new_todo">
@@ -22,21 +26,31 @@
     </form>
     <br>
 
+    <!-- TodoList -->
     {% if latest_todolist %}
         <ul>
             {% for todo in latest_todolist %}
+                
+                <!-- Todo의 완료 여부에 따라 보여지는 것에 차이를 주기 위해 if 사용 -->
+                <!-- 중복되는 코드 제거하고, <p> 태그에 적용되는 css class만 다르게 하기 -->
                 {% if todo.is_completed %}
                     <li>
                         <p>{{ todo.todo_content }}____( O )____{{todo.last_mod}}</p>
+                        
+                        <!-- Todo 내용을 수정하는 폼 -->
                         <form action="{% url 'todo:update' todo.pk %}" method="POST">
                             {% csrf_token %}
                             <input type="text" name="modified_content">
                             <input type="submit" value="수정">
                         </form>
+
+                        <!-- Todo 완료여부를 바꾸는 폼 -->
                         <form action="{% url 'todo:change_complete' todo.pk %}" method="POST">
                             {% csrf_token %}
                             <input type="submit" value="완료여부 변경">
                         </form>
+
+                        <!-- Todo를 삭제하는 폼 -->
                         <form action="{% url 'todo:delete' todo.pk %}" method="POST">
                             {% csrf_token %}
                             <input type="submit" value="삭제">
@@ -62,6 +76,8 @@
                 {% endif %}
             {% endfor %}
         </ul>
+
+    <!-- TodoList가 없는 경우 -->
     {% else %}
         <p>No polls are available.</p>
     {% endif %}

@@ -10,6 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+"""
+계정(로그인, 회원가입)과 관련된 기능을 제공하는 accounts 앱,
+Todo기능을 구현한 todo 앱을 INSTALLED_APPS에 추가했습니다.
+
+DATABASE를 로컬 MariaDB 서버로 설정했습니다.
+
+TIMEZONE을 한국 시간대로 설정했습니다.
+
+STATIC_ROOT를 추가했습니다.
+"""
+
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

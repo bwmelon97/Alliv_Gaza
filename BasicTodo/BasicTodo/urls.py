@@ -13,6 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+"""
+base url은 todo앱의 index view 함수와 연결했습니다.
+/accounts/는 연결된 view 함수 또는 클래스가 없음을 주의하세요. (accounts.urls 참고)
+"""
+
 from django.contrib import admin
 from django.urls import path, include
 

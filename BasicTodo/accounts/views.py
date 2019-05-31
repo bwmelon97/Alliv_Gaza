@@ -1,3 +1,14 @@
+'''
+회원가입 기능을 하는    signup
+로그인 기능을 하는      login
+로그아웃 기능을 하는    logout
+함수들을 가지고 있으며,
+
+email_pattern 정규표현식을 통해 회원가입 및 로그인 시, 아이디를 검사합니다.
+
+로그인, 로그아웃 및 회원가입 기능은 django의 auth기능 및 모델을 이용했으며, DB의 auth_user 테이블을 이용합니다.
+'''
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -33,6 +44,16 @@ email_pattern = re.compile(r'''
 
 
 def signup(request):
+    '''
+    회원가입 기능을 하는 함수입니다.
+    
+    POST로 받은 request의 경우, 에러의 경우 에러 메세지와 함께 signup 템플릿을 render하며
+    에러가 아닌 경우, auth_user 테이블에 새로운 레코드를 추가(user생성)하며 로그인합니다.
+    POST가 아닌 request의 경우, signup 템플릿을 render 해줍니다.
+    (GET request = 메인 페이지에서 <a> 태그로 들어온 경우,
+     POST request = signup 페이지에서 form을 제출한 경우)
+    '''
+
     if request.method == 'POST':
         input_id = request.POST['username']
         
@@ -72,6 +93,16 @@ def signup(request):
 
 
 def login(request):
+    '''
+    로그인 기능을 하는 함수입니다.
+
+    GET request (<a>태그 혹은 url 입력)으로 들어온 경우, login.html 템플릿을 render해줍니다.
+    POST request (accounts/login/ 에서 form을 제출)의 경우,
+    ID가 이메일 형태가 아니면 에러 메세지와 함께 템플릿을 다시 render하고,
+    auth.authenticate를 이용해 입력 받은 정보와 일치하는 유저를 찾고, 
+    있다면 로그인 후 메인 페이지로 이동하고, 없으면 에러 메세지와 함께 템플릿을 다시 render합니다.
+    '''
+
     if request.method == 'POST':
         input_id = request.POST['username']
         
@@ -104,6 +135,12 @@ def login(request):
 
 
 def logout(request):
+    '''
+    로그아웃 기능을 하는 함수입니다.
+
+    메인페이지의 submit 버튼을 통해서만 POST request를 받고,
+    POST request에 한해서만 logout이 되도록 했습니다.
+    '''
     if request.method == "POST":
         auth.logout(request)
         return redirect('base')
