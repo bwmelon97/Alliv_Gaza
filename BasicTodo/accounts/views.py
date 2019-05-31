@@ -67,6 +67,16 @@ def signup(request):
             }
             return render(request, 'accounts/signup.html', context)
 
+        # 이미 해당 아이디가 있는 경우
+        if User.objects.filter(username=input_id):
+            is_error = True
+            error_message = '해당 아이디는 이미 존재합니다'
+            context = {
+                'is_error' : is_error,
+                'error_m' : error_message 
+            }
+            return render(request, 'accounts/signup.html', context)
+
         # 비밀번호 입력이 서로 일치하지 않는 경우
         if request.POST['password'] != request.POST['password-confirm']:
             is_error = True
