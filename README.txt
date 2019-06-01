@@ -5,7 +5,7 @@
 ├── BasicTodo                             
 │   ├── BasicTodo  
 │   │   ├── __init__.py  
-│   │   ├── settings.py                     # DB 서버는 저의 local mariadb 서버를 이용했습니다.
+│   │   ├── settings.py                     # DB 서버는 저의 local MariaDB 서버를 이용했습니다.
 │   │   ├── urls.py
 │   │   └── wsgi.py
 │   ├── BasicTodo_nginx.conf                # 80번(기본)포트를 받아서 로컬 호스트의 9000번 포트의 gunicorn WSGI 서버를 이용하게 세팅되어 있습니다.
