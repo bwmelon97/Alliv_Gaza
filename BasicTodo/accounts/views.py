@@ -53,39 +53,22 @@ def signup(request):
     (GET request = 메인 페이지에서 <a> 태그로 들어온 경우,
      POST request = signup 페이지에서 form을 제출한 경우)
     '''
+    template_name = 'accounts/signup.html'
 
     if request.method == 'POST':
         input_id = request.POST['username']
-        
+
         # 이메일 형태의 아이디가 아닌 경우
         if not email_pattern.match(input_id):
-            is_error = True
-            error_message = '이메일 형태의 아이디를 입력하세요'
-            context = {
-                'is_error' : is_error,
-                'error_m' : error_message 
-            }
-            return render(request, 'accounts/signup.html', context)
+            return error_render(request, '이메일 형태의 아이디를 입력하세요', template_name)
 
         # 이미 해당 아이디가 있는 경우
         if User.objects.filter(username=input_id):
-            is_error = True
-            error_message = '해당 아이디는 이미 존재합니다'
-            context = {
-                'is_error' : is_error,
-                'error_m' : error_message 
-            }
-            return render(request, 'accounts/signup.html', context)
+            return error_render(request, '해당 아이디는 이미 존재합니다', template_name)
 
         # 비밀번호 입력이 서로 일치하지 않는 경우
         if request.POST['password'] != request.POST['password-confirm']:
-            is_error = True
-            error_message = '비밀번호가 서로 일치하지 않습니다'
-            context = {
-                'is_error' : is_error,
-                'error_m' : error_message 
-            }
-            return render(request, 'accounts/signup.html', context)
+            return error_render(request, '비밀번호가 서로 일치하지 않습니다', template_name)
 
         # 회원가입이 성공적으로 이루어진 경우 (if 조건문은 추후 수정)
         if request.POST['password'] == request.POST['password-confirm']:
@@ -112,20 +95,16 @@ def login(request):
     auth.authenticate를 이용해 입력 받은 정보와 일치하는 유저를 찾고, 
     있다면 로그인 후 메인 페이지로 이동하고, 없으면 에러 메세지와 함께 템플릿을 다시 render합니다.
     '''
+    template_name = 'accounts/login.html'
 
     if request.method == 'POST':
         input_id = request.POST['username']
         
         # 이메일 형태의 아이디가 아니면,        
         if not email_pattern.match(input_id):
-            is_error = True
-            error_message = '이메일 형태의 아이디를 입력하세요'
-            context = {
-                'is_error' : is_error,
-                'error_m' : error_message 
-            }
-            return render(request, 'accounts/login.html', context)
+            return error_render(request, '이메일 형태의 아이디를 입력하세요', template_name)
 
+        # 비밀번호를 입력 받고 인증 시도
         input_pw = request.POST['password']
         user = auth.authenticate(request, username=input_id, password=input_pw)
         if user is not None:
@@ -133,13 +112,7 @@ def login(request):
             return redirect('base')
 
         # 아이디, 비밀번호가 일치하지 않는 경우
-        is_error = True
-        error_message = '아이디 또는 비밀번호가 일치하지 않습니다'
-        context = {
-            'is_error' : is_error,
-            'error_m' : error_message
-        }
-        return render(request, 'accounts/login.html', context)
+        return error_render(request, '아이디 또는 비밀번호가 일치하지 않습니다', template_name)
 
     return render(request, 'accounts/login.html')
 
@@ -155,3 +128,20 @@ def logout(request):
         auth.logout(request)
         return redirect('base')
     return redirect('base')
+
+
+def error_render (request, error_m, template):
+    '''
+    request와 에러 메시지와 템플릿을를 받고, 
+    boolean type의 is_error와 string type의 에러 메시지를 갖는 context를 형성하고,
+    해당 request, 템플릿, context으로 render하는 함수입니다.
+
+    View 함수가 아니라, 중복 코드를 없애기 위한 함수입니다.
+    '''
+    is_error = True
+    error_message = error_m
+    context = {
+        'is_error' : is_error,
+        'error_m' : error_message
+    }
+    return render(request, template, context)
