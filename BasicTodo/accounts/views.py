@@ -82,7 +82,7 @@ def signup(request):
         # 알 수 없는 경우 다시 리로드
         return redirect('accounts:signup')
 
-    return render(request, 'accounts/signup.html')
+    return render(request, template_name)
 
 
 def login(request):
@@ -114,7 +114,7 @@ def login(request):
         # 아이디, 비밀번호가 일치하지 않는 경우
         return error_render(request, '아이디 또는 비밀번호가 일치하지 않습니다', template_name)
 
-    return render(request, 'accounts/login.html')
+    return render(request, template_name)
 
 
 def logout(request):
