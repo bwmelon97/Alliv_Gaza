@@ -38,7 +38,12 @@ class TodoList(models.Model):
         '''
         새로운 string을 받아 인스턴스의 todo_content를 수정합니다.
         last_mod 값을 함수가 실행된 시간으로 설정합니다.
+        
+        [updated] 아무 문자 입력 없을 때는 수정되지 않습니다.
         '''
+        if not newStr:
+            return
+
         self.todo_content = newStr
         self.last_mod = timezone.now()
 

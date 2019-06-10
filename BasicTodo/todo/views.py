@@ -65,9 +65,18 @@ def update(request, pk):
 
     POST로 받은 request에 한해서 해당 내용을 실행하며,
     함수를 redirect('base')를 리턴하여, index 함수가 호출되게 합니다.
+
+    [update] 다른 유저의 todolist를 변경할 수 없도록 검증하는 코드가 추가되었습니다.
     '''
     if request.method == "POST":
+        user = auth.get_user(request)
         todolist = get_object_or_404(TodoList, pk=pk)
+
+        # todolist 소유자와 user가 일치하지 않는 경우, 
+        # 추가 작업 없이 홈 화면으로 이동
+        if todolist.owner != user:
+            return redirect('base')
+
         todolist.modify_content(request.POST['modified_content'])
         todolist.save()
         return redirect('base')
@@ -80,7 +89,14 @@ def change_todo_complete(request, pk):
     함수의 작동 방식은 update와 동일합니다.
     '''
     if request.method == "POST":
+        user = auth.get_user(request)
         todolist = get_object_or_404(TodoList, pk=pk)
+
+        # todolist 소유자와 user가 일치하지 않는 경우, 
+        # 추가 작업 없이 홈 화면으로 이동
+        if todolist.owner != user:
+            return redirect('base')
+
         todolist.change_complete()
         todolist.save()
         return redirect('base')
@@ -94,7 +110,14 @@ def delete(request, pk):
     함수의 작동 방식은 update와 동일합니다.
     '''
     if request.method == "POST":
+        user = auth.get_user(request)
         todolist = get_object_or_404(TodoList, pk=pk)
+
+        # todolist 소유자와 user가 일치하지 않는 경우, 
+        # 추가 작업 없이 홈 화면으로 이동
+        if todolist.owner != user:
+            return redirect('base')
+
         todolist.delete()
         return redirect('base')
 
