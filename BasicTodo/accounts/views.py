@@ -139,9 +139,8 @@ def error_render (request, error_m, template):
     View 함수가 아니라, 중복 코드를 없애기 위한 함수입니다.
     '''
     is_error = True
-    error_message = error_m
     context = {
         'is_error' : is_error,
-        'error_m' : error_message
+        'error_m' : error_m
     }
     return render(request, template, context)
