@@ -10,6 +10,7 @@ pylint = "*"
 django = "*"
 gunicorn = "*"
 mysqlclient = "*"
+djangorestframework = "*"
 
 [requires]
 python_version = "3.7"

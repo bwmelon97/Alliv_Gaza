@@ -16,4 +16,6 @@ urlpatterns = [
     path('update/<int:pk>', views.update, name='update'),
     path('change_complete/<int:pk>', views.change_todo_complete, name='change_complete'),
     path('delete/<int:pk>', views.delete, name='delete'),
+    path('test/', views.ListTodo.as_view()),
+    path('test/<int:pk>/', views.DetailTodo.as_view()),
 ]

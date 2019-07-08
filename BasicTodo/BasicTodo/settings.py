@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # System Apps
+    'rest_framework',
+
     # My Apps
     'accounts.apps.AccountsConfig',
     'todo.apps.TodoConfig',
@@ -144,3 +147,9 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}

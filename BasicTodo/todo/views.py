@@ -15,8 +15,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.utils import timezone
+from rest_framework import generics
 
 from .models import TodoList
+from .serializers import TodoListSerializer
 
 def index(request):
     '''
@@ -122,3 +124,12 @@ def delete(request, pk):
         return redirect('base')
 
     return redirect('base')
+
+
+class ListTodo(generics.ListCreateAPIView):
+    queryset = TodoList.objects.all()
+    serializer_class = TodoListSerializer
+
+class DetailTodo(generics.RetrieveUpdateDestroyAPIView):
+    queryset = TodoList.objects.all()
+    serializer_class = TodoListSerializer
