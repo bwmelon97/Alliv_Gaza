@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
     # System Apps
     'rest_framework',
+    'corsheaders',
 
     # My Apps
     'accounts.apps.AccountsConfig',
@@ -60,6 +61,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # cors 제약 헤제를 위한 미들 웨어
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -153,3 +156,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ]
 }
+
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:8080'] 
