@@ -9,5 +9,6 @@ class TodoListSerializer(serializers.ModelSerializer):
             'is_completed',
             'pub_date',
             'last_mod',
+            'id',
         )
         model = TodoList
